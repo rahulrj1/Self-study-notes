@@ -1,0 +1,11 @@
+OAuth (Open authorisation) is providing someone access without password. It is an open standard for authorisation
+
+LDAP -> All identities are stored in the identity datastore which is controlled by the identity provider. Example of Identity provider is any LDAP provider like Active Directory (Microsoft LDAP). LDAP(Lightweight Directory Access Protocol) is a protocol that makes it possible for applications to query user information rapidly. LDAP centralises the users in one place.
+
+LDAP Architecture -> we enter our credentials in the app & app sends our credentials to the LDAP provider for authentication. LDAP has to be in the same datacenter as our application.
+SAML (Security Assertion Markup Language) -> The user tries to access a service provided by the service provider (SP). SP redirects the user to SAML identity provider with a SAML authentication request via user agent. User authenticates with IdP. IdP sends a SAML response (with an assertion) back to the SP. SP validates the assertion and grants access. In this mechanism, the App UI will have the SAML token. But we also need to secure the call by UI to various services (microservices architecture). One approach is to pass the SAML token from app UI to the services but this is a bad approach.  
+
+Structured access token (like JWT) don’t need the resource server to call the authorization server for validating the token.
+
+In OAuth, client application first hits the authorization endpoint to get the auth code, then it hits the token endpoint to get the access token & it used access token to send request to the resource server. The authorization endpoint doesn’t directly redirect with an access token.   OpenId connect core defines a standard set of scopes that can be used to retrieve the user information after the user gets authenticated
+The client will specify openId scopes along with the resource api scopes during the authorize request and the access_token request. The authorization server in response will return an access token as well as an OpenId id token which contains user information. Just like the client can get access to resource api by using application scopes, the client can get access to user information by using OpenId scopes.  The client application can access the user information in 2 different ways: either via id_token or via user info endpoint.   
